@@ -1,0 +1,55 @@
+:root {
+  --grandparent-color: red;
+  --parent-color: blue;
+  --child-color: green;
+
+  font-size: 16px;
+}
+
+html,
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.grandparent {
+  width: 60vh;
+  height: 60vh;
+  background-color: var(--grandparent-color);
+  position: relative;
+}
+
+.parent {
+  width: 40vh;
+  height: 40vh;
+  background-color: var(--parent-color);
+  position: absolute;
+  top: 10vh;
+  left: 10vh;
+}
+
+.child {
+  width: 20vh;
+  height: 20vh;
+  background-color: var(--child-color);
+  position: absolute;
+  top: 10vh;
+  left: 10vh;
+}
+
+.output {
+  font-size: 1.5rem;
+}
