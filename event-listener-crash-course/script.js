@@ -4,15 +4,9 @@ const grandparent = document.querySelector(".grandparent");
 const parent = document.querySelector(".parent");
 const child = document.querySelector(".child");
 
+const divs = document.querySelectorAll("div");
+
 // Grandparent *********************************************** */
-grandparent.addEventListener(
-  "click",
-  (e) => {
-    //console.log(e.target);
-    console.log("Grandparent Capture");
-  },
-  { capture: true }
-);
 
 grandparent.addEventListener("click", (e) => {
   //console.log(e.target);
@@ -20,45 +14,36 @@ grandparent.addEventListener("click", (e) => {
 });
 
 //Parent ******************************************************** */
+parent.addEventListener("click", printHi);
+
+setTimeout(() => {
+  parent.removeEventListener("click", printHi);
+}, 2000);
+/*
 parent.addEventListener(
   "click",
   (e) => {
     //console.log(e.target);
-    console.log("Parent Capture");
+    console.log("Parent Bubble");
   },
-  { capture: true }
+  { once: true }
 );
-
-parent.addEventListener("click", (e) => {
-  //console.log(e.target);
-  console.log("Parent Bubble");
-});
-
+*/
 // Child ********************************************************** */
-child.addEventListener(
-  "click",
-  (e) => {
-    //console.log(e.target);
-    //e.stopPropagation();
-    console.log("Child Capture");
-  },
-  { capture: true }
-);
 
 child.addEventListener("click", (e) => {
   //console.log(e.target);
   console.log("Child Bubble");
 });
 
-// ***************************************************************** */
-document.addEventListener(
-  "click",
-  (e) => {
-    console.log("Document Capture");
-  },
-  { capture: true }
-);
+// Function printHi()
+function printHi() {
+  console.log("Hi");
+}
 
-document.addEventListener("click", (e) => {
-  console.log("Document Bubble");
+// ForEach() Function for all 3 divs
+divs.forEach((div) => {
+  div.addEventListener("click", () => {
+    console.log("Hi!");
+  });
 });
