@@ -1,49 +1,40 @@
 "use strict";
 
-const grandparent = document.querySelector(".grandparent");
-const parent = document.querySelector(".parent");
-const child = document.querySelector(".child");
-
+//Variable for all div Elements
 const divs = document.querySelectorAll("div");
-
-// Grandparent *********************************************** */
-
-grandparent.addEventListener("click", (e) => {
-  //console.log(e.target);
-  console.log("Grandparent Bubble");
-});
-
-//Parent ******************************************************** */
-parent.addEventListener("click", printHi);
-
-setTimeout(() => {
-  parent.removeEventListener("click", printHi);
-}, 2000);
 /*
-parent.addEventListener(
-  "click",
-  (e) => {
-    //console.log(e.target);
-    console.log("Parent Bubble");
-  },
-  { once: true }
-);
-*/
-// Child ********************************************************** */
-
-child.addEventListener("click", (e) => {
-  //console.log(e.target);
-  console.log("Child Bubble");
-});
-
-// Function printHi()
-function printHi() {
-  console.log("Hi");
-}
-
 // ForEach() Function for all 3 divs
 divs.forEach((div) => {
   div.addEventListener("click", () => {
     console.log("Hi!");
   });
 });
+
+
+document.addEventListener("click", (ev) => {
+  if (ev.target.matches("div")) {
+    console.log("hi");
+  }
+});
+*/
+
+addGlobalEventListener("click", "div", (e) => {
+  console.log("Hi!");
+});
+
+// global function
+function addGlobalEventListener(type, selector, callback) {
+  document.addEventListener(type, (e) => {
+    if (e.target.matches(selector)) {
+      callback(e);
+    }
+  });
+}
+
+const newDiv = document.createElement("div");
+
+newDiv.style.width = "60vh";
+newDiv.style.height = "60vh";
+newDiv.style.backgroundColor = "purple";
+
+document.body.appendChild(newDiv);
