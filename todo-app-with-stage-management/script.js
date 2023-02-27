@@ -16,6 +16,9 @@ function renderItem(description, done) {
 
   //Styling
   toDoLi.classList.add("toDo-item");
+  if (done === true) {
+    toDoLi.classList.add("toDoDone");
+  }
 
   //Checkbox Element
   const toDoCheckBox = document.createElement("input");
@@ -64,7 +67,6 @@ function addNewToDo() {
       done: false,
     });
   }
-
   event.target.reset();
 }
 
