@@ -10,7 +10,7 @@ const toDoState = {
 // @TODO render toDos
 // <li><input type="checkbox">Learn HTML</li>
 
-function renderItem(description) {
+function renderItem(description, done) {
   //Li-Element
   const toDoLi = document.createElement("li");
 
@@ -20,6 +20,8 @@ function renderItem(description) {
   //Checkbox Element
   const toDoCheckBox = document.createElement("input");
   toDoCheckBox.type = "checkbox";
+
+  toDoCheckBox.checked = done;
 
   // create TextNode
   const toDoText = document.createTextNode(description);
@@ -47,11 +49,21 @@ function addNewToDo() {
   //Get ToDoList ul Element - done
   //const toDoList = document.querySelector("#toDoList");
 
-  toDoState.toDos.push({
-    id: +new Date(),
-    description: newToDoInput.value,
-    done: false,
-  });
+  for (let toDoItem of toDoState.toDos) {
+    if (
+      newToDoInput.value.toLowerCase() === toDoItem.description.toLowerCase()
+    ) {
+      return;
+    }
+  }
+
+  if (newToDoInput.value !== "") {
+    toDoState.toDos.push({
+      id: +new Date(),
+      description: newToDoInput.value,
+      done: false,
+    });
+  }
 
   event.target.reset();
 }
@@ -62,7 +74,7 @@ function render() {
   toDoList.innerHTML = "";
 
   for (let toDo of toDoState.toDos) {
-    const newToDoItem = renderItem(toDo.description);
+    const newToDoItem = renderItem(toDo.description, toDo.done);
     toDoList.append(newToDoItem);
   }
 }
