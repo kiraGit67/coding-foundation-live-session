@@ -17,6 +17,16 @@ if (Array.isArray(toDosFromLocalStorageToObject)) {
   toDoState.toDos = toDosFromLocalStorageToObject;
 }
 
+// toDos filtern
+// done
+const doneToDos = toDoState.toDos.filter((toDo) => toDo.done === true);
+console.log(doneToDos);
+
+// open
+const openToDos = toDoState.toDos.filter((toDo) => toDo.done === false);
+console.log(openToDos);
+
+// toDos aktualisieren
 function updateLocalStorage() {
   localStorage.setItem("toDos", JSON.stringify(toDoState.toDos));
 }
