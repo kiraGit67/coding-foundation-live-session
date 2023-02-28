@@ -1,6 +1,7 @@
 "use strict";
 
 const toDoState = {
+  filter: "all",
   toDos: [
     /*
     { id: 1, description: "Learn HTML", done: false },
@@ -98,6 +99,20 @@ function addNewToDo() {
   //event.target.reset();
   newToDoInput.value = "";
 }
+
+// @ToDo filter ToDoList
+const filterButtons = document.querySelectorAll("input[type='radio']");
+console.log(filterButtons);
+
+filterButtons.forEach((filterButton) => {
+  filterButton.addEventListener("change", function (e) {
+    toDoState.filter = e.target.value;
+    console.log(toDoState.filter);
+  });
+});
+
+//const filterButton = document.querySelector("input[type='radio']:checked");
+//console.log(filterButton.value);
 
 // @ToDo render ToDoList
 function render() {
