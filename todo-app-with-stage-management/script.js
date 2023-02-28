@@ -110,4 +110,17 @@ addToDoForm.addEventListener("submit", (evt) => {
   render();
 });
 
+// @ToDo Button to remove done toDos
+const removeDoneToDos = document.querySelector("#remove-done-toDos");
+
+removeDoneToDos.addEventListener("click", function () {
+  for (let toDo of toDoState.toDos) {
+    if (toDo.done === true) {
+      toDoState.toDos.splice(toDoState.toDos.indexOf(toDo), 1);
+    }
+  }
+  updateLocalStorage();
+  render();
+});
+
 render();
