@@ -2,35 +2,51 @@
 
 const toDoState = {
   toDos: [
+    /*
     { id: 1, description: "Learn HTML", done: false },
     { id: 2, description: "Learn CSS", done: true },
+    */
   ],
 };
+
+// Local Storage
+const toDosFromLocalStorageToObject = JSON.parse(localStorage.getItem("toDos"));
+console.log(toDosFromLocalStorageToObject);
+
+if (Array.isArray(toDosFromLocalStorageToObject)) {
+  toDoState.toDos = toDosFromLocalStorageToObject;
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("toDos", JSON.stringify(toDoState.toDos));
+}
 
 // @TODO render toDos
 // <li><input type="checkbox">Learn HTML</li>
 
-function renderItem(description, done) {
+function renderItem(toDo) {
   //Li-Element
   const toDoLi = document.createElement("li");
 
   //Styling
   toDoLi.classList.add("toDo-item");
-  if (done === true) {
-    toDoLi.classList.add("toDoDone");
-  }
 
   //Checkbox Element
   const toDoCheckBox = document.createElement("input");
   toDoCheckBox.type = "checkbox";
-
-  toDoCheckBox.checked = done;
+  toDoCheckBox.checked = toDo.done;
 
   // create TextNode
-  const toDoText = document.createTextNode(description);
+  const toDoText = document.createTextNode(toDo.description);
+
+  if (toDo.done) {
+    toDoLi.classList.toggle("toDoDone");
+  }
 
   toDoCheckBox.addEventListener("change", () => {
-    toDoLi.classList.toggle("toDoDone");
+    toDo.done = !toDo.done;
+    updateLocalStorage();
+    render();
   });
 
   // Put all Elements together
@@ -66,8 +82,11 @@ function addNewToDo() {
       description: newToDoInput.value,
       done: false,
     });
+
+    updateLocalStorage();
   }
-  event.target.reset();
+  //event.target.reset();
+  newToDoInput.value = "";
 }
 
 // @ToDo render ToDoList
@@ -76,7 +95,7 @@ function render() {
   toDoList.innerHTML = "";
 
   for (let toDo of toDoState.toDos) {
-    const newToDoItem = renderItem(toDo.description, toDo.done);
+    const newToDoItem = renderItem(toDo);
     toDoList.append(newToDoItem);
   }
 }
