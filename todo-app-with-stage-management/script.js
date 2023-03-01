@@ -1,13 +1,8 @@
 "use strict";
 
 const toDoState = {
-  filter: "all",
-  toDos: [
-    /*
-    { id: 1, description: "Learn HTML", done: false },
-    { id: 2, description: "Learn CSS", done: true },
-    */
-  ],
+  filter: "",
+  toDos: [],
 };
 
 // Local Storage
@@ -17,15 +12,6 @@ console.log(toDosFromLocalStorageToObject);
 if (Array.isArray(toDosFromLocalStorageToObject)) {
   toDoState.toDos = toDosFromLocalStorageToObject;
 }
-
-// toDos filtern
-// done
-const doneToDos = toDoState.toDos.filter((toDo) => toDo.done === true);
-console.log(doneToDos);
-
-// open
-const openToDos = toDoState.toDos.filter((toDo) => toDo.done === false);
-console.log(openToDos);
 
 // toDos aktualisieren
 function updateLocalStorage() {
@@ -96,7 +82,7 @@ function addNewToDo() {
 
     updateLocalStorage();
   }
-  //event.target.reset();
+
   newToDoInput.value = "";
 }
 
@@ -108,18 +94,35 @@ filterButtons.forEach((filterButton) => {
   filterButton.addEventListener("change", function (e) {
     toDoState.filter = e.target.value;
     console.log(toDoState.filter);
+    render();
   });
 });
-
-//const filterButton = document.querySelector("input[type='radio']:checked");
-//console.log(filterButton.value);
 
 // @ToDo render ToDoList
 function render() {
   const toDoList = document.querySelector("#toDoList");
   toDoList.innerHTML = "";
+  /**/
+  // toDos filtern
+  // done
+  const doneToDos = toDoState.toDos.filter((toDo) => toDo.done === true);
+  console.log(doneToDos);
 
-  for (let toDo of toDoState.toDos) {
+  // open
+  const openToDos = toDoState.toDos.filter((toDo) => toDo.done === false);
+  console.log(openToDos);
+
+  let stateArray;
+
+  if (toDoState.filter === "done") {
+    stateArray = doneToDos;
+  } else if (toDoState.filter === "open") {
+    stateArray = openToDos;
+  } else {
+    stateArray = toDoState.toDos;
+  }
+
+  for (let toDo of stateArray) {
     const newToDoItem = renderItem(toDo);
     toDoList.append(newToDoItem);
   }
